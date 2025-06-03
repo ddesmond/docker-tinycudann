@@ -82,14 +82,16 @@ RUN cd /tmp/tinycudann &&\
 
 RUN ls -la /usr/local/cuda-12.1
 
+RUN dnf install nvidia-smi -y
+
 RUN nvidia-smi
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
 
-
-RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
-    cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
+#
+#RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
+#    cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
 
 CMD ["bash", "/setup/run.sh"]
