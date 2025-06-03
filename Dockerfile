@@ -91,7 +91,8 @@ RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
 
 
 FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
-
+COPY --from=builder /opt/dist  /usr/local/lib/python3.10/site-packages/
+COPY --from=builder /tmp/tinycudann/tiny-cuda-nn/bindings/torch /tmp/tinycudann/tiny-cuda-nn/bindings/torch
 
 RUN dnf update -y && \
     dnf upgrade --refresh -y && \
@@ -129,8 +130,7 @@ RUN pyenv install $PYTHON_VERSION && \
     pip install --no-cache-dir --upgrade pip setuptools wheel
 
 
-COPY --from=builder /opt/dist  /usr/local/lib/python3.10/site-packages/
-COPY --from=builder /tmp/tinycudann/tiny-cuda-nn/bindings/torch /tmp/tinycudann/tiny-cuda-nn/bindings/torch
+
 
 
 CMD ["bash", "/setup/run.sh"]
