@@ -54,10 +54,15 @@ RUN cd /tmp/tinycudann &&\
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
+RUN updatedb && \
+    locate tiny-cuda-nn
+
 RUN cd /tmp/tunycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
 
-FROM scratch
+
+FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
 WORKDIR /
 COPY --from=builder /dist/ /usr/local/lib/python3.10/site-packages/
+
 
