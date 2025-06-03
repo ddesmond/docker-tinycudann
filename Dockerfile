@@ -7,7 +7,7 @@ ENV TZ=Europe/Zagreb
 RUN mkdir -v /dist
 
 WORKDIR /setup
-COPY setup/deps.sh /setup/deps.sh
+COPY ./setup/deps.sh /setup/deps.sh
 
 RUN chmod +x /setup/*.sh
 
