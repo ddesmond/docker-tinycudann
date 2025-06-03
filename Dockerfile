@@ -1,5 +1,5 @@
 FROM mambaorg/micromamba:1.4.4 as micromamba
-FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu22.04 as builder
+FROM nvidia/cuda:12.6.3-runtime-rockylinux9 as builder
 
 #           +----------------------------------------+
 #           |                                        |
@@ -38,10 +38,10 @@ ENV PATH=/opt/conda/bin:$PATH
 #           |                                        |
 #           +----------------------------------------+
 
-ARG PYTHON_VERSION=3.10.6
-ARG PYTORCH_VERSION=1.13.1
+ARG PYTHON_VERSION=3.10.12
+ARG PYTORCH_VERSION=2.1.2
 RUN micromamba install -y -n base -c conda-forge python=$PYTHON_VERSION git
-RUN micromamba install -y -n base -c pytorch -c nvidia -c conda-forge pytorch=$PYTORCH_VERSION pytorch-cuda=11.7 
+RUN micromamba install -y -n base -c pytorch -c nvidia -c conda-forge pytorch=$PYTORCH_VERSION pytorch-cuda=11.8
 
 #           +----------------------------------------+
 #           |                                        |
@@ -49,7 +49,7 @@ RUN micromamba install -y -n base -c pytorch -c nvidia -c conda-forge pytorch=$P
 #           |                                        |
 #           +----------------------------------------+
 
-ARG TCNN_CUDA_ARCHITECTURES=90;89;86;80;75;70;61;52
+ARG TCNN_CUDA_ARCHITECTURES=86
 RUN pip install --verbose 'git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch'
 
 #           +----------------------------------------+
