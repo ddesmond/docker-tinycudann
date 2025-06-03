@@ -1,6 +1,11 @@
 FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS builder
 USER root
+
 RUN mkdir -v /dist
+
+COPY ./setup /setup
+
+RUN chmod +x /setup/*.sh
 
 RUN dnf update -y && \
     dnf upgrade --refresh -y && \
@@ -9,19 +14,24 @@ RUN dnf update -y && \
     dnf install -y epel-release
 
 
-RUN  dnf install -y gcc make cmake nano zip \
-    git git-lfs wget curl mlocate --allowerasing
+RUN dnf install -y gcc make cmake nano zip \
+    git git-lfs wget curl mlocate \
+    make gcc patch zlib-devel bzip2 bzip2-devel \
+    readline-devel sqlite sqlite-devel openssl-devel \
+    tk-devel libffi-devel xz-devel \
+    libuuid-devel gdbm-libs libnsl2 \
+    mesa-libGLU \
+    mlocate ninja-build \
+     --allowerasing && \
+    /usr/bin/crb enable && \
+    dnf update -y  && \
+    dnf groupinstall -y "Development Tools" && \
+    /usr/bin/git lfs install
 
-RUN dnf install  -y \
-  make gcc patch zlib-devel bzip2 bzip2-devel \
-  readline-devel sqlite sqlite-devel openssl-devel \
-  tk-devel libffi-devel xz-devel libuuid-devel gdbm-libs libnsl2
+RUN bash /setup/deps.sh
 
 ENV TCNN_CUDA_ARCHITECTURES=86
-ENV CUDA_HOME=/usr/local/cuda-12.9
 ENV PATH=$CUDA_HOME/bin:$PATH
-ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/lib64/stubs:$LD_LIBRARY_PATH
-ENV QT_QPA_PLATFORM="offscreen"
 ENV HOME=/root \
     PATH=/root/.local/bin:$PATH
 
@@ -39,9 +49,8 @@ RUN pyenv install $PYTHON_VERSION && \
 
 # Install dependencies for tiny-cuda-nn
 
-RUN dnf install cuda-toolkit-12 -y
+RUN dnf install -y nvidia-container-toolkit --allowerasing
 
-RUN dnf install mlocate ninja-build -y
 
 RUN pip uninstall torch torchvision functorch tinycudann numpy
 
