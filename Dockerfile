@@ -75,20 +75,31 @@ RUN updatedb
 
 
 
+#RUN cd /tmp/tinycudann &&\
+#    git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
+#    cd tiny-cuda-nn && \
+#    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
+#    cmake --build build --config RelWithDebInfo -j$(nproc)
+#
+#
+#
+#RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
+#    python setup.py install
+
+
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
-    cd tiny-cuda-nn && \
-    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
-    cmake --build build --config RelWithDebInfo -j$(nproc)
+    cd tiny-cuda-nn \
 
-
-
-RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
-    python setup.py install
-
+RUN mkdir build && cd build && \
+    cmake .. \
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+      -DTINYCUDA_USE_PYTHON=ON \
+      -G Ninja && \
+    ninja
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
-#RUN cp -rv /opt/conda/lib/python3.10/site-packages/tinycudann*/ /opt/dist
+#RUN cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
 CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
