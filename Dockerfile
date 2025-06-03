@@ -39,9 +39,13 @@ RUN pyenv install $PYTHON_VERSION && \
 
 RUN dnf install cuda-toolkit-12 -y
 
+RUN dnf install mlocate -y
+
 RUN pip uninstall torch torchvision functorch tinycudann
 
 RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
+    updatedb && \
+    locate cuda-12
 
 
 
