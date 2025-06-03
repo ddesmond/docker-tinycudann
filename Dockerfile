@@ -92,10 +92,9 @@ RUN cd /tmp/tinycudann &&\
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
-RUN pip install build
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
-    python -m build --no-isolation
+    python setup.py install
 
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
