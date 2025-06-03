@@ -4,9 +4,10 @@ USER root
 
 ENV TZ=Europe/Zagreb
 
-RUN mkdir -v /dist
+RUN mkdir -p /data && chmod -R 777 /data
 
 WORKDIR /setup
+COPY ./setup/deps.sh /setup/deps.sh
 
 COPY ./setup/deps.sh /setup/deps.sh
 
