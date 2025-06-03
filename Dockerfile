@@ -37,9 +37,9 @@ RUN pyenv install $PYTHON_VERSION && \
 
 # Install dependencies for tiny-cuda-nn
 
-RUN pip3 install torch==2.1.2+cu121 torchvision==0.16.2+cu121 --extra-index-url https://download.pytorch.org/whl/cu121
-RUN pip3 install ninja gsplat
-RUN pip3 install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+RUN pip install torch==2.1.2+cu121 torchvision==0.16.2+cu121 --extra-index-url https://download.pytorch.org/whl/cu121
+RUN pip install ninja gsplat
+RUN pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 
 #RUN cp -rv /opt/conda/lib/python3.10/site-packages/tinycudann*/ /dist
 
