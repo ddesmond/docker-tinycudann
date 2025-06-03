@@ -31,7 +31,7 @@ RUN dnf install -y gcc make cmake nano zip \
 RUN bash /setup/deps.sh
 
 ENV TCNN_CUDA_ARCHITECTURES=86
-ENV PATH=$CUDA_HOME/bin:$PATH
+
 ENV HOME=/root \
     PATH=/root/.local/bin:$PATH
 
@@ -66,7 +66,7 @@ RUN cd /tmp/tinycudann &&\
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
 RUN updatedb
-RUN dnf install cuda-12.1* -y
+
 RUN locate cuda
 #
 #RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
