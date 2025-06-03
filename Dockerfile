@@ -83,15 +83,20 @@ RUN updatedb
 #
 #
 #
-#RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
-#    python setup.py install
+
 
 
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
     cd tiny-cuda-nn && \
-    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTINYCUDA_USE_PYTHON=ON && \
+    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
+
+RUN pip install build
+
+RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
+    python setup.py install
+
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
 #RUN cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
