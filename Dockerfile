@@ -92,7 +92,7 @@ RUN cd /tmp/tinycudann &&\
     cd tiny-cuda-nn
 
 RUN mkdir build && cd build && \
-    cmake ..  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTINYCUDA_USE_PYTHON=ON -G Ninja && \
+    cmake ../  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTINYCUDA_USE_PYTHON=ON -G Ninja && \
     ninja
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
