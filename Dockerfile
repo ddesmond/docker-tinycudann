@@ -91,9 +91,8 @@ RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
     cd tiny-cuda-nn
 
-RUN mkdir build && cd build && \
-    cmake ../  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTINYCUDA_USE_PYTHON=ON -G Ninja && \
-    ninja
+RUN cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTINYCUDA_USE_PYTHON=ON && \
+    cmake --build build --config RelWithDebInfo -j$(nproc)
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
 #RUN cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
