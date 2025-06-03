@@ -82,9 +82,6 @@ RUN cd /tmp/tinycudann &&\
 
 RUN ls -la /usr/local/cuda-12.1
 
-RUN dnf install  nvidia-driver-cuda -y
-
-RUN nvidia-smi
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
