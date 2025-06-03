@@ -86,10 +86,11 @@ RUN ls -la /usr/local/cuda-12.1
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
 
-#
-#RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
-#    cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
+COPY ./setup/run.sh /setup/run.sh
+RUN chmod +x /setup/*.sh
 
+RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
+    cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
 CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
