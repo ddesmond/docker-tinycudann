@@ -39,9 +39,13 @@ RUN pyenv install $PYTHON_VERSION && \
 
 RUN dnf install cuda-toolkit-12 -y
 
+RUN pip uninstall torch torchvision functorch tinycudann
+
+RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
 
 
 
 FROM scratch
 WORKDIR /
 COPY --from=builder /dist/ /usr/local/lib/python3.10/site-packages/
+
