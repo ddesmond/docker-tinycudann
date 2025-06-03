@@ -95,7 +95,7 @@ RUN cd /tmp/tinycudann &&\
 RUN pip install build
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
-    python setup.py install
+    python -m build
 
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
