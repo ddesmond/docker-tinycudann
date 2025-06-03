@@ -9,4 +9,4 @@ if [ -e /opt/dist/tinycudann-1.7-py3.10.egg-info ]; then
 else
   rm -rf /setup/.setup-init
 fi
-sleep infinity
+echo "_____ Done _____"

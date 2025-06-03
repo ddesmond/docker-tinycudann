@@ -95,6 +95,11 @@ RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
 
 RUN ls -la /opt/dist
 
+
+FROM nvidia/cuda:12.6.3-devel-rockylinux9 AS system
+
+
+
 CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
 #WORKDIR /
