@@ -67,15 +67,19 @@ RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url h
 ENV PATH=/usr/local/cuda/bin:$PATH
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
+
+RUN updatedb
+
+RUN locate nvcc
+
+
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
     cd tiny-cuda-nn && \
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
-RUN updatedb
 
-RUN locate cuda
 #
 #RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
 #    python setup.py install
