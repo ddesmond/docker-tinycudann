@@ -9,8 +9,6 @@ RUN mkdir -p /data && chmod -R 777 /data
 WORKDIR /setup
 COPY ./setup/deps.sh /setup/deps.sh
 
-COPY ./setup/deps.sh /setup/deps.sh
-
 RUN chmod +x /setup/*.sh
 
 RUN dnf update -y && \
