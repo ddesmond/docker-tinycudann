@@ -48,7 +48,7 @@ RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
 
 RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121
 
-RUN cd /tmp/tunycudann &&\
+RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
     cd tiny-cuda-nn && \
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
