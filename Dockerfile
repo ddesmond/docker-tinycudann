@@ -80,6 +80,7 @@ RUN cd /tmp/tinycudann &&\
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
+RUN ls -la /usr/local/cuda-12.1
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
