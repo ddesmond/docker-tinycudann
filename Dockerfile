@@ -1,10 +1,13 @@
 FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS builder
+
 USER root
+
+ENV TZ=Europe/Zagreb
 
 RUN mkdir -v /dist
 
 WORKDIR /setup
-COPY ./setup/ /setup
+COPY ./setup/ /setup/
 
 RUN chmod +x /setup/*.sh
 
