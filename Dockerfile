@@ -71,6 +71,8 @@ ENV CUDA_HOME=/usr/local/cuda-12.1
 ENV PATH=$CUDA_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 
+RUN updatedb
+RUN locate cuda_runtime.h
 
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
@@ -78,7 +80,7 @@ RUN cd /tmp/tinycudann &&\
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
-RUN updatedb
+
 
 #
 #RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
