@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.6.3-runtime-rockylinux9
+FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS builder
 
 USER root
 
@@ -74,18 +74,6 @@ ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/lib:$LD_LIBRARY_PATH
 RUN updatedb
 
 
-
-#RUN cd /tmp/tinycudann &&\
-#    git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
-#    cd tiny-cuda-nn && \
-#    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
-#    cmake --build build --config RelWithDebInfo -j$(nproc)
-#
-#
-#
-
-
-
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
     cd tiny-cuda-nn && \
@@ -97,8 +85,53 @@ RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
 
 
-#RUN mkdir /opt/dist && chmod -R 777 /opt/dist
-#RUN cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
+RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
+    cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
+
+
+
+FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
+
+
+RUN dnf update -y && \
+    dnf upgrade --refresh -y && \
+    dnf install -y dnf-plugins-core && \
+    dnf config-manager --set-enabled crb && \
+    dnf install -y epel-release
+
+
+RUN dnf install -y gcc make cmake nano zip \
+    git git-lfs wget curl mlocate \
+    make gcc patch zlib-devel bzip2 bzip2-devel \
+    readline-devel sqlite sqlite-devel openssl-devel \
+    tk-devel libffi-devel xz-devel \
+    libuuid-devel gdbm-libs libnsl2 \
+     --allowerasing && \
+    /usr/bin/crb enable && \
+    dnf update -y  && \
+    /usr/bin/git lfs install
+
+ENV TCNN_CUDA_ARCHITECTURES=86
+
+ENV HOME=/root \
+    PATH=/root/.local/bin:$PATH
+
+# Pyenv
+RUN curl https://pyenv.run | bash
+ENV PATH=$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH
+
+ARG PYTHON_VERSION=3.10.12
+
+# Python
+RUN pyenv install $PYTHON_VERSION && \
+    pyenv global $PYTHON_VERSION && \
+    pyenv rehash && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel
+
+
+COPY --from=builder /opt/dist  /usr/local/lib/python3.10/site-packages/
+COPY --from=builder /tmp/tinycudann/tiny-cuda-nn/bindings/torch /tmp/tinycudann/tiny-cuda-nn/bindings/torch
+
 
 CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
