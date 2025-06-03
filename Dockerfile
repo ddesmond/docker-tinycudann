@@ -41,7 +41,7 @@ RUN dnf install cuda-toolkit-12 -y
 
 RUN dnf install mlocate ninja-build -y
 
-RUN pip uninstall torch torchvision functorch tinycudann
+RUN pip uninstall torch torchvision functorch tinycudann numpy
 
 RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
     updatedb
