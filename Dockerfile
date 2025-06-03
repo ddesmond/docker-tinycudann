@@ -72,7 +72,7 @@ RUN updatedb
 
 RUN locate nvcc
 
-RUN dnf install nvidia-nvcc -y
+RUN dnf search nvcc
 
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
