@@ -54,8 +54,7 @@ RUN cd /tmp/tinycudann &&\
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
-RUN updatedb && \
-    locate tiny-cuda-nn
+RUN updatedb
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
