@@ -17,9 +17,11 @@ RUN dnf install  -y \
   readline-devel sqlite sqlite-devel openssl-devel \
   tk-devel libffi-devel xz-devel libuuid-devel gdbm-libs libnsl2
 
+ENV TCNN_CUDA_ARCHITECTURES=86
 ENV CUDA_HOME=/usr/local/cuda-12.9
 ENV PATH=$CUDA_HOME/bin:$PATH
-ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/lib64/stubs:$LD_LIBRARY_PATH
+ENV QT_QPA_PLATFORM="offscreen"
 ENV HOME=/root \
     PATH=/root/.local/bin:$PATH
 
@@ -55,11 +57,7 @@ RUN cd /tmp/tinycudann &&\
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
 RUN updatedb
-ENV TCNN_CUDA_ARCHITECTURES=86
-ENV CUDA_HOME=/usr/local/cuda-12.9
-ENV PATH=$CUDA_HOME/bin:$PATH
-ENV LD_LIBRARY_PATH=$CUDA_HOME/lib:$CUDA_HOME/lib64:$CUDA_HOME/lib64/stubs:$LD_LIBRARY_PATH
-ENV QT_QPA_PLATFORM="offscreen"
+
 
 
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
