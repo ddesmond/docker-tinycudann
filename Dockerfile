@@ -82,6 +82,8 @@ RUN cd /tmp/tinycudann &&\
 
 RUN ls -la /usr/local/cuda-12.1
 
+RUN dnf install -y cuda-12.1
+
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
 
