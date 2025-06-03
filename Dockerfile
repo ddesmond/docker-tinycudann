@@ -58,7 +58,7 @@ RUN cd /tmp/tinycudann &&\
 
 RUN updatedb
 
-
+RUN locate cuda
 #
 #RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
 #    python setup.py install
