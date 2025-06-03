@@ -8,4 +8,6 @@ Grab the dist form the data folder and enjoy life!
 links:
 https://github.com/NVlabs/tiny-cuda-nn
 
+https://github.com/FNNDSC/tinycudann-docker-build/blob/master/Dockerfile
+
 

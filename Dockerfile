@@ -59,12 +59,15 @@ RUN cd /tmp/tinycudann &&\
 RUN updatedb
 
 
+#
+#RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
+#    python setup.py install
+#
+#
+#RUN mkdir /opt/dist && chmod -R 777 /opt/dist
+#RUN cp -rv /opt/conda/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
-RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
-    python setup.py install
-
-
-CMD ["sleep", "infinity"]
+CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
 #WORKDIR /
 #COPY --from=builder /dist/ /usr/local/lib/python3.10/site-packages/
