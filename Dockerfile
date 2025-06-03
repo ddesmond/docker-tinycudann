@@ -64,7 +64,7 @@ RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
 RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121
 
 
-RUN dnf install -y cuda-nvcc-12-1
+RUN dnf install -y cuda-nvcc-12-1 cuda-toolkit-12
 
 # Set environment variables
 ENV CUDA_HOME=/usr/local/cuda-12.1
