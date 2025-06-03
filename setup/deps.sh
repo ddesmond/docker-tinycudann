@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 echo "Compiling CMAKE"
 cd /tmp
 wget https://github.com/Kitware/CMake/releases/download/v3.30.1/cmake-3.30.1.tar.gz
