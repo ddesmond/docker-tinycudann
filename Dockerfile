@@ -3,7 +3,8 @@ USER root
 
 RUN mkdir -v /dist
 
-COPY setup /setup
+WORKDIR /setup
+COPY ./setup /setup
 
 RUN chmod +x /setup/*.sh
 
