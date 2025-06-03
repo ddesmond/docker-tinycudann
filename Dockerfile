@@ -83,11 +83,10 @@ RUN cd /tmp/tinycudann &&\
 
 
 
-#
-#RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
-#    python setup.py install
-#
-#
+RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
+    python setup.py install
+
+
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
 #RUN cp -rv /opt/conda/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
