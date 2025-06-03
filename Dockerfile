@@ -92,6 +92,9 @@ RUN chmod +x /setup/*.sh
 RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
     cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
+
+RUN ls -la /opt/dist
+
 CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
 #WORKDIR /
