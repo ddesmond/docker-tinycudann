@@ -4,7 +4,7 @@ USER root
 RUN mkdir -v /dist
 
 WORKDIR /setup
-COPY ./setup /setup
+COPY ./setup/ /setup
 
 RUN chmod +x /setup/*.sh
 
