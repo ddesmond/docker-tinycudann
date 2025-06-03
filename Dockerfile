@@ -47,7 +47,14 @@ RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
     updatedb && \
     locate cuda-12
 
+RUN cd /tmp/tunycudann &&\
+    git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
+    cd tiny-cuda-nn && \
+    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
+    cmake --build build --config RelWithDebInfo -j$(nproc)
 
+RUN cd /tmp/tunycudann/tiny-cuda-nn/bindings/torch && \
+    python setup.py install
 
 FROM scratch
 WORKDIR /
