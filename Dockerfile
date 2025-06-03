@@ -89,9 +89,8 @@ RUN updatedb
 
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
-    cd tiny-cuda-nn
-
-RUN cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTINYCUDA_USE_PYTHON=ON && \
+    cd tiny-cuda-nn && \
+    cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
 #RUN mkdir /opt/dist && chmod -R 777 /opt/dist
