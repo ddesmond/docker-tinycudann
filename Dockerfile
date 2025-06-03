@@ -20,8 +20,6 @@ RUN dnf install  -y \
 ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$CUDA_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
-
-
 ENV HOME=/root \
     PATH=/root/.local/bin:$PATH
 
@@ -35,11 +33,7 @@ ARG PYTHON_VERSION=3.10.12
 RUN pyenv install $PYTHON_VERSION && \
     pyenv global $PYTHON_VERSION && \
     pyenv rehash && \
-    pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    uv self update && \
-    uv pip install --no-cache-dir \
-    datasets huggingface-hub "protobuf<4" "click<8.1" --system
+    pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Install dependencies for tiny-cuda-nn
 
