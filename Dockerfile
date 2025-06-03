@@ -68,11 +68,11 @@ ENV PATH=/usr/local/cuda/bin:$PATH
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 
+RUN dnf install -y cuda-nvcc-12-1
+
 RUN updatedb
 
 RUN locate nvcc
-
-RUN dnf search nvcc
 
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
