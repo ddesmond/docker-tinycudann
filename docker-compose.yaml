@@ -1,0 +1,20 @@
+version: "1"
+
+services:
+  builder:
+    container_name: tiny-cuda-nn-builder
+    hostname: tinybuilder
+    build: .
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+        - ./data:/data
+
+    command: [ "/bin/bash", "-c", "bash /setup/run.sh" ]
