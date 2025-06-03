@@ -57,7 +57,7 @@ RUN cd /tmp/tinycudann &&\
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
 RUN updatedb
-
+RUN dnf install cuda-12.1* -y
 RUN locate cuda
 #
 #RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
