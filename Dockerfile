@@ -17,7 +17,7 @@ RUN dnf install  -y \
   readline-devel sqlite sqlite-devel openssl-devel \
   tk-devel libffi-devel xz-devel libuuid-devel gdbm-libs libnsl2
 
-ENV CUDA_HOME=/usr/local/cuda
+ENV CUDA_HOME=/usr/local/cuda-12.9
 ENV PATH=$CUDA_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 ENV HOME=/root \
