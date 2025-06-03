@@ -55,7 +55,7 @@ RUN cd /tmp/tinycudann &&\
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
 RUN updatedb
-
+ENV TCNN_CUDA_ARCHITECTURES=86
 RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
     python setup.py install
 
