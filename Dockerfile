@@ -63,16 +63,14 @@ RUN cd /tmp && mkdir tinycudann && cd tinycudann && \
 
 RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121
 
-# Set environment variables
-ENV PATH=/usr/local/cuda/bin:$PATH
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-
 
 RUN dnf install -y cuda-nvcc-12-1
 
-RUN updatedb
+# Set environment variables
+ENV CUDA_HOME=/usr/local/cuda-12.1
+ENV PATH=$CUDA_HOME/bin:$PATH
+ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 
-RUN locate nvcc
 
 RUN cd /tmp/tinycudann &&\
     git clone --recursive https://github.com/nvlabs/tiny-cuda-nn && \
@@ -80,6 +78,7 @@ RUN cd /tmp/tinycudann &&\
     cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
     cmake --build build --config RelWithDebInfo -j$(nproc)
 
+RUN updatedb
 
 #
 #RUN cd /tmp/tinycudann/tiny-cuda-nn/bindings/torch && \
