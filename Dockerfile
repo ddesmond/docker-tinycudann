@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.6.3-runtime-rockylinux9 as builder
+FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS builder
 USER root
 RUN mkdir -v /dist
 #RUN cp -rv /opt/conda/lib/python3.10/site-packages/tinycudann*/ /dist
