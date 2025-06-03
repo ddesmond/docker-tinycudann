@@ -82,7 +82,7 @@ RUN cd /tmp/tinycudann &&\
 
 RUN ls -la /usr/local/cuda-12.1
 
-RUN dnf search nvidia-smi -y
+RUN dnf whatprovides nvidia-smi -y
 
 RUN nvidia-smi
 
