@@ -89,50 +89,6 @@ RUN mkdir /opt/dist && chmod -R 777 /opt/dist && \
     cp -rv /root/.pyenv/versions/3.10.12/lib/python3.10/site-packages/tinycudann*/ /opt/dist
 
 
-
-FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
-COPY --from=builder /opt/dist  /usr/local/lib/python3.10/site-packages/
-COPY --from=builder /tmp/tinycudann/tiny-cuda-nn/bindings/torch /tmp/tinycudann/tiny-cuda-nn/bindings/torch
-
-RUN dnf update -y && \
-    dnf upgrade --refresh -y && \
-    dnf install -y dnf-plugins-core && \
-    dnf config-manager --set-enabled crb && \
-    dnf install -y epel-release
-
-
-RUN dnf install -y gcc make cmake nano zip \
-    git git-lfs wget curl mlocate \
-    make gcc patch zlib-devel bzip2 bzip2-devel \
-    readline-devel sqlite sqlite-devel openssl-devel \
-    tk-devel libffi-devel xz-devel \
-    libuuid-devel gdbm-libs libnsl2 \
-     --allowerasing && \
-    /usr/bin/crb enable && \
-    dnf update -y  && \
-    /usr/bin/git lfs install
-
-ENV TCNN_CUDA_ARCHITECTURES=86
-
-ENV HOME=/root \
-    PATH=/root/.local/bin:$PATH
-
-# Pyenv
-RUN curl https://pyenv.run | bash
-ENV PATH=$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH
-
-ARG PYTHON_VERSION=3.10.12
-
-# Python
-RUN pyenv install $PYTHON_VERSION && \
-    pyenv global $PYTHON_VERSION && \
-    pyenv rehash && \
-    pip install --no-cache-dir --upgrade pip setuptools wheel
-
-
-
-
-
 CMD ["bash", "/setup/run.sh"]
 ##FROM nvidia/cuda:12.6.3-runtime-rockylinux9 AS system
 #WORKDIR /
